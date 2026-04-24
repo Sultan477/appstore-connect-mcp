@@ -22,7 +22,7 @@ export const schema = {
     .string()
     .optional()
     .describe(
-      "Territory ID (e.g. USA). When the price point came from list-subscription-price-points with filter[territory], pass that same territory here. Required by API for territory-specific price points; omit only if applying to all."
+      "Territory ID (e.g. USA). When the price point came from list-subscription-price-points with filter.territory, pass that same territory here. Required by API for territory-specific price points; omit only if applying to all."
     ),
   startDate: z
     .string()
@@ -41,7 +41,7 @@ export const schema = {
 export const metadata: ToolMetadata = {
   name: "create-subscription-price",
   description:
-    "Attach a price to a subscription (by price point and optionally territory). Set subscription availability first with create-subscription-availability for the territory, or you may get 409 ENTITY_ERROR.RELATIONSHIP.INVALID. Use price point IDs from list-subscription-price-points; when you used filter[territory] there, pass that same territoryId here.",
+    "Attach a price to a subscription (by price point and optionally territory). Set subscription availability first with create-subscription-availability for the territory, or you may get 409 ENTITY_ERROR.RELATIONSHIP.INVALID. Use price point IDs from list-subscription-price-points; when you used filter.territory there, pass that same territoryId here.",
   annotations: {
     title: "Create subscription price",
     readOnlyHint: false,
