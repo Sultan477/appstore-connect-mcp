@@ -9,7 +9,7 @@ import { unwrapApiResult } from "../lib/api-error.ts";
 import { toArray } from "../lib/query.ts";
 
 export const schema = {
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .describe("Actor ID(s) to fetch (required). Get IDs from submission/version responses."),
   limit: z.number().min(1).max(200).default(50).optional(),
@@ -30,7 +30,7 @@ export const metadata: ToolMetadata = {
 
 export default async function listActorsTool(args: InferSchema<typeof schema>) {
   const client = getClient();
-  const ids = toArray(args["filter[id]"]);
+  const ids = toArray(args["filter.id"]);
   if (!ids?.length) throw new Error("At least one filter[id] is required");
   const query: NonNullable<ActorsGetCollectionData["query"]> = {
     "filter[id]": ids,

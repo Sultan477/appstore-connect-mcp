@@ -36,19 +36,19 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of certificates to return (default 100, max 200)"),
-  "filter[certificateType]": z
+  "filter.certificateType": z
     .union([certificateTypeEnum, z.array(certificateTypeEnum)])
     .optional()
     .describe("Filter by certificate type(s)"),
-  "filter[serialNumber]": z
+  "filter.serialNumber": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by serial number(s)"),
-  "filter[displayName]": z
+  "filter.displayName": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by display name(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by certificate ID(s)"),
@@ -71,17 +71,17 @@ export default async function listCertificatesTool(
   const client = getClient();
   const query: NonNullable<CertificatesGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[certificateType]"])?.length && {
-      "filter[certificateType]": toArray(args["filter[certificateType]"])!,
+    ...(toArray(args["filter.certificateType"])?.length && {
+      "filter[certificateType]": toArray(args["filter.certificateType"])!,
     }),
-    ...(toArray(args["filter[serialNumber]"])?.length && {
-      "filter[serialNumber]": toArray(args["filter[serialNumber]"])!,
+    ...(toArray(args["filter.serialNumber"])?.length && {
+      "filter[serialNumber]": toArray(args["filter.serialNumber"])!,
     }),
-    ...(toArray(args["filter[displayName]"])?.length && {
-      "filter[displayName]": toArray(args["filter[displayName]"])!,
+    ...(toArray(args["filter.displayName"])?.length && {
+      "filter[displayName]": toArray(args["filter.displayName"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.Certificates.certificatesGetCollection({

@@ -15,27 +15,27 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of beta testers to return (default 100, max 200)"),
-  "filter[apps]": z
+  "filter.apps": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
-  "filter[betaGroups]": z
+  "filter.betaGroups": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by beta group ID(s)"),
-  "filter[email]": z
+  "filter.email": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by email(s)"),
-  "filter[firstName]": z
+  "filter.firstName": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by first name(s)"),
-  "filter[lastName]": z
+  "filter.lastName": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by last name(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by beta tester ID(s)"),
@@ -58,23 +58,23 @@ export default async function listBetaTestersTool(
   const client = getClient();
   const query: NonNullable<BetaTestersGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[apps]"])?.length && {
-      "filter[apps]": toArray(args["filter[apps]"])!,
+    ...(toArray(args["filter.apps"])?.length && {
+      "filter[apps]": toArray(args["filter.apps"])!,
     }),
-    ...(toArray(args["filter[betaGroups]"])?.length && {
-      "filter[betaGroups]": toArray(args["filter[betaGroups]"])!,
+    ...(toArray(args["filter.betaGroups"])?.length && {
+      "filter[betaGroups]": toArray(args["filter.betaGroups"])!,
     }),
-    ...(toArray(args["filter[email]"])?.length && {
-      "filter[email]": toArray(args["filter[email]"])!,
+    ...(toArray(args["filter.email"])?.length && {
+      "filter[email]": toArray(args["filter.email"])!,
     }),
-    ...(toArray(args["filter[firstName]"])?.length && {
-      "filter[firstName]": toArray(args["filter[firstName]"])!,
+    ...(toArray(args["filter.firstName"])?.length && {
+      "filter[firstName]": toArray(args["filter.firstName"])!,
     }),
-    ...(toArray(args["filter[lastName]"])?.length && {
-      "filter[lastName]": toArray(args["filter[lastName]"])!,
+    ...(toArray(args["filter.lastName"])?.length && {
+      "filter[lastName]": toArray(args["filter.lastName"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.BetaTesters.betaTestersGetCollection({

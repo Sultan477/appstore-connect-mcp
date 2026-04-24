@@ -26,11 +26,11 @@ export const schema = {
     .max(200)
     .default(50)
     .describe("Maximum number of reviews to return (default 50, max 200)"),
-  "filter[rating]": z
+  "filter.rating": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by rating(s), e.g. 1, 2, 3, 4, 5"),
-  "exists[publishedResponse]": z
+  "exists.publishedResponse": z
     .boolean()
     .optional()
     .describe("Filter by whether a developer response exists"),
@@ -61,13 +61,13 @@ export default async function listCustomerReviewsTool(
     AppStoreVersionsCustomerReviewsGetToManyRelatedData["query"]
   > = {
     limit: args.limit,
-    ...(args["filter[rating]"] !== undefined && {
-      "filter[rating]": Array.isArray(args["filter[rating]"])
-        ? args["filter[rating]"]
-        : [args["filter[rating]"]!],
+    ...(args["filter.rating"] !== undefined && {
+      "filter[rating]": Array.isArray(args["filter.rating"])
+        ? args["filter.rating"]
+        : [args["filter.rating"]!],
     }),
-    ...(args["exists[publishedResponse]"] !== undefined && {
-      "exists[publishedResponse]": args["exists[publishedResponse]"],
+    ...(args["exists.publishedResponse"] !== undefined && {
+      "exists[publishedResponse]": args["exists.publishedResponse"],
     }),
     ...(args.sort !== undefined && {
       sort: Array.isArray(args.sort) ? args.sort : [args.sort],

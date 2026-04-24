@@ -9,7 +9,7 @@ import { unwrapApiResult } from "../lib/api-error.ts";
 import { toArray } from "../lib/query.ts";
 
 export const schema = {
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .describe("App ID(s) (required). Beta app review details for this app."),
   limit: z
@@ -20,7 +20,7 @@ export const schema = {
     .describe(
       "Maximum number of beta app review details to return (default 100, max 200)"
     ),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by beta app review detail ID(s)"),
@@ -43,10 +43,10 @@ export default async function listBetaAppReviewDetailsTool(
 ) {
   const client = getClient();
   const query: NonNullable<BetaAppReviewDetailsGetCollectionData["query"]> = {
-    "filter[app]": toArray(args["filter[app]"])!,
+    "filter[app]": toArray(args["filter.app"])!,
     limit: args.limit,
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result =

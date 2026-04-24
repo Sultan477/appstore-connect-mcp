@@ -18,23 +18,23 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of devices to return (default 100, max 200)"),
-  "filter[platform]": z
+  "filter.platform": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
-  "filter[status]": z
+  "filter.status": z
     .union([statusEnum, z.array(statusEnum)])
     .optional()
     .describe("Filter by device status(es)"),
-  "filter[name]": z
+  "filter.name": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by device name(s)"),
-  "filter[udid]": z
+  "filter.udid": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by UDID(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by device ID(s)"),
@@ -55,20 +55,20 @@ export default async function listDevicesTool(args: InferSchema<typeof schema>) 
   const client = getClient();
   const query: NonNullable<DevicesGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[platform]"])?.length && {
-      "filter[platform]": toArray(args["filter[platform]"])!,
+    ...(toArray(args["filter.platform"])?.length && {
+      "filter[platform]": toArray(args["filter.platform"])!,
     }),
-    ...(toArray(args["filter[status]"])?.length && {
-      "filter[status]": toArray(args["filter[status]"])!,
+    ...(toArray(args["filter.status"])?.length && {
+      "filter[status]": toArray(args["filter.status"])!,
     }),
-    ...(toArray(args["filter[name]"])?.length && {
-      "filter[name]": toArray(args["filter[name]"])!,
+    ...(toArray(args["filter.name"])?.length && {
+      "filter[name]": toArray(args["filter.name"])!,
     }),
-    ...(toArray(args["filter[udid]"])?.length && {
-      "filter[udid]": toArray(args["filter[udid]"])!,
+    ...(toArray(args["filter.udid"])?.length && {
+      "filter[udid]": toArray(args["filter.udid"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.Devices.devicesGetCollection({ query });

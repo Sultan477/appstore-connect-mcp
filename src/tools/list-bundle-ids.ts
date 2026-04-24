@@ -17,19 +17,19 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of bundle IDs to return (default 100, max 200)"),
-  "filter[identifier]": z
+  "filter.identifier": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by bundle identifier(s)"),
-  "filter[platform]": z
+  "filter.platform": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
-  "filter[name]": z
+  "filter.name": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by name(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by bundle ID(s)"),
@@ -52,17 +52,17 @@ export default async function listBundleIdsTool(
   const client = getClient();
   const query: NonNullable<BundleIdsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[identifier]"])?.length && {
-      "filter[identifier]": toArray(args["filter[identifier]"])!,
+    ...(toArray(args["filter.identifier"])?.length && {
+      "filter[identifier]": toArray(args["filter.identifier"])!,
     }),
-    ...(toArray(args["filter[platform]"])?.length && {
-      "filter[platform]": toArray(args["filter[platform]"])!,
+    ...(toArray(args["filter.platform"])?.length && {
+      "filter[platform]": toArray(args["filter.platform"])!,
     }),
-    ...(toArray(args["filter[name]"])?.length && {
-      "filter[name]": toArray(args["filter[name]"])!,
+    ...(toArray(args["filter.name"])?.length && {
+      "filter[name]": toArray(args["filter.name"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.BundleIds.bundleIdsGetCollection({

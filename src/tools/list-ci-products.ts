@@ -19,11 +19,11 @@ export const schema = {
     .describe(
       "Maximum number of CI products to return (default 100, max 200)"
     ),
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
-  "filter[productType]": z
+  "filter.productType": z
     .union([productTypeEnum, z.array(productTypeEnum)])
     .optional()
     .describe("Filter by product type(s)"),
@@ -46,11 +46,11 @@ export default async function listCiProductsTool(
   const client = getClient();
   const query: NonNullable<CiProductsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[app]"])?.length && {
-      "filter[app]": toArray(args["filter[app]"])!,
+    ...(toArray(args["filter.app"])?.length && {
+      "filter[app]": toArray(args["filter.app"])!,
     }),
-    ...(toArray(args["filter[productType]"])?.length && {
-      "filter[productType]": toArray(args["filter[productType]"])!,
+    ...(toArray(args["filter.productType"])?.length && {
+      "filter[productType]": toArray(args["filter.productType"])!,
     }),
   };
   const result =

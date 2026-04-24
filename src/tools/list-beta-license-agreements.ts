@@ -9,7 +9,7 @@ import { unwrapApiResult } from "../lib/api-error.ts";
 import { toArray } from "../lib/query.ts";
 
 export const schema = {
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
@@ -35,8 +35,8 @@ export default async function listBetaLicenseAgreementsTool(
   const client = getClient();
   const query: NonNullable<BetaLicenseAgreementsGetCollectionData["query"]> = {
     limit: args.limit ?? 50,
-    ...(toArray(args["filter[app]"])?.length && {
-      "filter[app]": toArray(args["filter[app]"])!,
+    ...(toArray(args["filter.app"])?.length && {
+      "filter[app]": toArray(args["filter.app"])!,
     }),
   };
   const result =

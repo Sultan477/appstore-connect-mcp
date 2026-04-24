@@ -19,19 +19,19 @@ export const schema = {
     .describe(
       "Maximum number of pre-release versions to return (default 100, max 200)"
     ),
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
-  "filter[platform]": z
+  "filter.platform": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
-  "filter[version]": z
+  "filter.version": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by version string(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by pre-release version ID(s)"),
@@ -57,17 +57,17 @@ export default async function listPreReleaseVersionsTool(
     PreReleaseVersionsGetCollectionData["query"]
   > = {
     limit: args.limit,
-    ...(toArray(args["filter[app]"])?.length && {
-      "filter[app]": toArray(args["filter[app]"])!,
+    ...(toArray(args["filter.app"])?.length && {
+      "filter[app]": toArray(args["filter.app"])!,
     }),
-    ...(toArray(args["filter[platform]"])?.length && {
-      "filter[platform]": toArray(args["filter[platform]"])!,
+    ...(toArray(args["filter.platform"])?.length && {
+      "filter[platform]": toArray(args["filter.platform"])!,
     }),
-    ...(toArray(args["filter[version]"])?.length && {
-      "filter[version]": toArray(args["filter[version]"])!,
+    ...(toArray(args["filter.version"])?.length && {
+      "filter[version]": toArray(args["filter.version"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result =

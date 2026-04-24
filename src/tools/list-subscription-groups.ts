@@ -18,7 +18,7 @@ export const schema = {
     .max(200)
     .default(50)
     .describe("Maximum number of groups to return (default 50, max 200)"),
-  "filter[referenceName]": z
+  "filter.referenceName": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by reference name(s), e.g. Premium"),
@@ -45,8 +45,8 @@ export default async function listSubscriptionGroupsTool(
     AppsSubscriptionGroupsGetToManyRelatedData["query"]
   > = {
     limit: args.limit,
-    ...(toArray(args["filter[referenceName]"])?.length && {
-      "filter[referenceName]": toArray(args["filter[referenceName]"])!,
+    ...(toArray(args["filter.referenceName"])?.length && {
+      "filter[referenceName]": toArray(args["filter.referenceName"])!,
     }),
   };
   const result =

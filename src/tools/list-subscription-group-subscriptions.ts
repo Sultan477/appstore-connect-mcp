@@ -33,15 +33,15 @@ export const schema = {
     .max(200)
     .default(50)
     .describe("Maximum number of subscriptions to return (default 50, max 200)"),
-  "filter[productId]": z
+  "filter.productId": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by product ID(s), e.g. premium_monthly_v2"),
-  "filter[name]": z
+  "filter.name": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by subscription name(s)"),
-  "filter[state]": z
+  "filter.state": z
     .union([stateEnum, z.array(stateEnum)])
     .optional()
     .describe("Filter by state (e.g. APPROVED)"),
@@ -72,14 +72,14 @@ export default async function listSubscriptionGroupSubscriptionsTool(
     SubscriptionGroupsSubscriptionsGetToManyRelatedData["query"]
   > = {
     limit: args.limit,
-    ...(toArray(args["filter[productId]"])?.length && {
-      "filter[productId]": toArray(args["filter[productId]"])!,
+    ...(toArray(args["filter.productId"])?.length && {
+      "filter[productId]": toArray(args["filter.productId"])!,
     }),
-    ...(toArray(args["filter[name]"])?.length && {
-      "filter[name]": toArray(args["filter[name]"])!,
+    ...(toArray(args["filter.name"])?.length && {
+      "filter[name]": toArray(args["filter.name"])!,
     }),
-    ...(toArray(args["filter[state]"])?.length && {
-      "filter[state]": toArray(args["filter[state]"])!,
+    ...(toArray(args["filter.state"])?.length && {
+      "filter[state]": toArray(args["filter.state"])!,
     }),
     ...(args.sort && { sort: [args.sort] }),
   };

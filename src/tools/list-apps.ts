@@ -15,19 +15,19 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of apps to return (default 100, max 200)"),
-  "filter[bundleId]": z
+  "filter.bundleId": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by bundle identifier(s)"),
-  "filter[name]": z
+  "filter.name": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app name(s)"),
-  "filter[sku]": z
+  "filter.sku": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by SKU(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
@@ -49,17 +49,17 @@ export default async function listAppsTool(args: InferSchema<typeof schema>) {
   const client = getClient();
   const query: NonNullable<AppsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[bundleId]"])?.length && {
-      "filter[bundleId]": toArray(args["filter[bundleId]"])!,
+    ...(toArray(args["filter.bundleId"])?.length && {
+      "filter[bundleId]": toArray(args["filter.bundleId"])!,
     }),
-    ...(toArray(args["filter[name]"])?.length && {
-      "filter[name]": toArray(args["filter[name]"])!,
+    ...(toArray(args["filter.name"])?.length && {
+      "filter[name]": toArray(args["filter.name"])!,
     }),
-    ...(toArray(args["filter[sku]"])?.length && {
-      "filter[sku]": toArray(args["filter[sku]"])!,
+    ...(toArray(args["filter.sku"])?.length && {
+      "filter[sku]": toArray(args["filter.sku"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.Apps.appsGetCollection({ query });

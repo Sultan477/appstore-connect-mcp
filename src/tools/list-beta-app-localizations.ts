@@ -17,15 +17,15 @@ export const schema = {
     .describe(
       "Maximum number of beta app localizations to return (default 100, max 200)"
     ),
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
-  "filter[locale]": z
+  "filter.locale": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by locale(s) (e.g. en-US)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by beta app localization ID(s)"),
@@ -49,14 +49,14 @@ export default async function listBetaAppLocalizationsTool(
   const client = getClient();
   const query: NonNullable<BetaAppLocalizationsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[app]"])?.length && {
-      "filter[app]": toArray(args["filter[app]"])!,
+    ...(toArray(args["filter.app"])?.length && {
+      "filter[app]": toArray(args["filter.app"])!,
     }),
-    ...(toArray(args["filter[locale]"])?.length && {
-      "filter[locale]": toArray(args["filter[locale]"])!,
+    ...(toArray(args["filter.locale"])?.length && {
+      "filter[locale]": toArray(args["filter.locale"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result =

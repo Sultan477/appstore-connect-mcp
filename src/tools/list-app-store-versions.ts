@@ -37,19 +37,19 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of versions to return (default 100, max 200)"),
-  "filter[platform]": z
+  "filter.platform": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
-  "filter[versionString]": z
+  "filter.versionString": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by version string(s)"),
-  "filter[appVersionState]": z
+  "filter.appVersionState": z
     .union([appVersionStateEnum, z.array(appVersionStateEnum)])
     .optional()
     .describe("Filter by app version state(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by version ID(s)"),
@@ -74,17 +74,17 @@ export default async function listAppStoreVersionsTool(
     AppsAppStoreVersionsGetToManyRelatedData["query"]
   > = {
     limit: args.limit,
-    ...(toArray(args["filter[platform]"])?.length && {
-      "filter[platform]": toArray(args["filter[platform]"])!,
+    ...(toArray(args["filter.platform"])?.length && {
+      "filter[platform]": toArray(args["filter.platform"])!,
     }),
-    ...(toArray(args["filter[versionString]"])?.length && {
-      "filter[versionString]": toArray(args["filter[versionString]"])!,
+    ...(toArray(args["filter.versionString"])?.length && {
+      "filter[versionString]": toArray(args["filter.versionString"])!,
     }),
-    ...(toArray(args["filter[appVersionState]"])?.length && {
-      "filter[appVersionState]": toArray(args["filter[appVersionState]"])!,
+    ...(toArray(args["filter.appVersionState"])?.length && {
+      "filter[appVersionState]": toArray(args["filter.appVersionState"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result =

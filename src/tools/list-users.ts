@@ -31,15 +31,15 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of users to return (default 100, max 200)"),
-  "filter[username]": z
+  "filter.username": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by username(s)"),
-  "filter[roles]": z
+  "filter.roles": z
     .union([roleEnum, z.array(roleEnum)])
     .optional()
     .describe("Filter by role(s)"),
-  "filter[visibleApps]": z
+  "filter.visibleApps": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by visible app ID(s)"),
@@ -60,14 +60,14 @@ export default async function listUsersTool(args: InferSchema<typeof schema>) {
   const client = getClient();
   const query: NonNullable<UsersGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[username]"])?.length && {
-      "filter[username]": toArray(args["filter[username]"])!,
+    ...(toArray(args["filter.username"])?.length && {
+      "filter[username]": toArray(args["filter.username"])!,
     }),
-    ...(toArray(args["filter[roles]"])?.length && {
-      "filter[roles]": toArray(args["filter[roles]"])!,
+    ...(toArray(args["filter.roles"])?.length && {
+      "filter[roles]": toArray(args["filter.roles"])!,
     }),
-    ...(toArray(args["filter[visibleApps]"])?.length && {
-      "filter[visibleApps]": toArray(args["filter[visibleApps]"])!,
+    ...(toArray(args["filter.visibleApps"])?.length && {
+      "filter[visibleApps]": toArray(args["filter.visibleApps"])!,
     }),
   };
   const result = await client.api.Users.usersGetCollection({ query });

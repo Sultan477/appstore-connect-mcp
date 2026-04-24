@@ -18,7 +18,7 @@ export const schema = {
     .describe(
       "Maximum number of localizations to return (default 100, max 200)"
     ),
-  "filter[locale]": z
+  "filter.locale": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by locale(s) (e.g. en-US)"),
@@ -47,8 +47,8 @@ export default async function listAppStoreVersionLocalizationsTool(
     path: { id: args.appStoreVersionId },
     query: {
       limit: args.limit,
-      ...(toArray(args["filter[locale]"])?.length && {
-        "filter[locale]": toArray(args["filter[locale]"])!,
+      ...(toArray(args["filter.locale"])?.length && {
+        "filter[locale]": toArray(args["filter.locale"])!,
       }),
     },
   };

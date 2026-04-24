@@ -20,7 +20,7 @@ const stateEnum = z.enum([
 ]);
 
 export const schema = {
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .describe("App ID(s) (required). Submission history for this app."),
   limit: z
@@ -31,11 +31,11 @@ export const schema = {
     .describe(
       'Maximum number of review submissions to return (default 100, max 200)'
     ),
-  "filter[platform]": z
+  "filter.platform": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
-  "filter[state]": z
+  "filter.state": z
     .union([stateEnum, z.array(stateEnum)])
     .optional()
     .describe("Filter by submission state(s)"),
@@ -66,13 +66,13 @@ export default async function listReviewSubmissionsTool(
 ) {
   const client = getClient();
   const query: NonNullable<ReviewSubmissionsGetCollectionData["query"]> = {
-    "filter[app]": toArray(args["filter[app]"])!,
+    "filter[app]": toArray(args["filter.app"])!,
     limit: args.limit,
-    ...(toArray(args["filter[platform]"])?.length && {
-      "filter[platform]": toArray(args["filter[platform]"])!,
+    ...(toArray(args["filter.platform"])?.length && {
+      "filter[platform]": toArray(args["filter.platform"])!,
     }),
-    ...(toArray(args["filter[state]"])?.length && {
-      "filter[state]": toArray(args["filter[state]"])!,
+    ...(toArray(args["filter.state"])?.length && {
+      "filter[state]": toArray(args["filter.state"])!,
     }),
   };
   const result =

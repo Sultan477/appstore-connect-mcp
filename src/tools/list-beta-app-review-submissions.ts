@@ -16,7 +16,7 @@ const betaReviewStateEnum = z.enum([
 ]);
 
 export const schema = {
-  "filter[build]": z
+  "filter.build": z
     .union([z.string(), z.array(z.string())])
     .describe(
       "Build ID(s) (required). Beta app review submissions for this build."
@@ -29,7 +29,7 @@ export const schema = {
     .describe(
       "Maximum number of beta app review submissions to return (default 100, max 200)"
     ),
-  "filter[betaReviewState]": z
+  "filter.betaReviewState": z
     .union([betaReviewStateEnum, z.array(betaReviewStateEnum)])
     .optional()
     .describe("Filter by beta review state(s)"),
@@ -53,10 +53,10 @@ export default async function listBetaAppReviewSubmissionsTool(
   const client = getClient();
   const query: NonNullable<BetaAppReviewSubmissionsGetCollectionData["query"]> =
     {
-      "filter[build]": toArray(args["filter[build]"])!,
+      "filter[build]": toArray(args["filter.build"])!,
       limit: args.limit,
-      ...(toArray(args["filter[betaReviewState]"])?.length && {
-        "filter[betaReviewState]": toArray(args["filter[betaReviewState]"])!,
+      ...(toArray(args["filter.betaReviewState"])?.length && {
+        "filter[betaReviewState]": toArray(args["filter.betaReviewState"])!,
       }),
     };
   const result =

@@ -19,15 +19,15 @@ export const schema = {
     .describe(
       "Maximum number of app encryption declarations to return (default 100, max 200)"
     ),
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
-  "filter[builds]": z
+  "filter.builds": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by build ID(s)"),
-  "filter[platform]": z
+  "filter.platform": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
@@ -52,14 +52,14 @@ export default async function listAppEncryptionDeclarationsTool(
   const query: NonNullable<AppEncryptionDeclarationsGetCollectionData["query"]> =
     {
       limit: args.limit,
-      ...(toArray(args["filter[app]"])?.length && {
-        "filter[app]": toArray(args["filter[app]"])!,
+      ...(toArray(args["filter.app"])?.length && {
+        "filter[app]": toArray(args["filter.app"])!,
       }),
-      ...(toArray(args["filter[builds]"])?.length && {
-        "filter[builds]": toArray(args["filter[builds]"])!,
+      ...(toArray(args["filter.builds"])?.length && {
+        "filter[builds]": toArray(args["filter.builds"])!,
       }),
-      ...(toArray(args["filter[platform]"])?.length && {
-        "filter[platform]": toArray(args["filter[platform]"])!,
+      ...(toArray(args["filter.platform"])?.length && {
+        "filter[platform]": toArray(args["filter.platform"])!,
       }),
     };
   const result =

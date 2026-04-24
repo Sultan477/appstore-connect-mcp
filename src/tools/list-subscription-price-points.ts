@@ -14,7 +14,7 @@ export const schema = {
     .describe(
       "Subscription ID (from create-subscription or list-subscription-group-subscriptions)"
     ),
-  "filter[territory]": z
+  "filter.territory": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe(
@@ -49,8 +49,8 @@ export default async function listSubscriptionPricePointsTool(
     SubscriptionsPricePointsGetToManyRelatedData["query"]
   > = {
     limit: args.limit,
-    ...(toArray(args["filter[territory]"])?.length && {
-      "filter[territory]": toArray(args["filter[territory]"])!,
+    ...(toArray(args["filter.territory"])?.length && {
+      "filter[territory]": toArray(args["filter.territory"])!,
     }),
   };
   const result =

@@ -33,15 +33,15 @@ export const schema = {
     .describe(
       "Maximum number of user invitations to return (default 100, max 200)"
     ),
-  "filter[email]": z
+  "filter.email": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by invite email(s)"),
-  "filter[roles]": z
+  "filter.roles": z
     .union([roleEnum, z.array(roleEnum)])
     .optional()
     .describe("Filter by role(s)"),
-  "filter[visibleApps]": z
+  "filter.visibleApps": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by visible app ID(s)"),
@@ -64,14 +64,14 @@ export default async function listUserInvitationsTool(
   const client = getClient();
   const query: NonNullable<UserInvitationsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[email]"])?.length && {
-      "filter[email]": toArray(args["filter[email]"])!,
+    ...(toArray(args["filter.email"])?.length && {
+      "filter[email]": toArray(args["filter.email"])!,
     }),
-    ...(toArray(args["filter[roles]"])?.length && {
-      "filter[roles]": toArray(args["filter[roles]"])!,
+    ...(toArray(args["filter.roles"])?.length && {
+      "filter[roles]": toArray(args["filter.roles"])!,
     }),
-    ...(toArray(args["filter[visibleApps]"])?.length && {
-      "filter[visibleApps]": toArray(args["filter[visibleApps]"])!,
+    ...(toArray(args["filter.visibleApps"])?.length && {
+      "filter[visibleApps]": toArray(args["filter.visibleApps"])!,
     }),
   };
   const result =

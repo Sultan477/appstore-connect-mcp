@@ -17,11 +17,11 @@ export const schema = {
     .describe(
       "Maximum number of build beta details to return (default 100, max 200)"
     ),
-  "filter[build]": z
+  "filter.build": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by build ID(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by build beta detail ID(s)"),
@@ -45,11 +45,11 @@ export default async function listBuildBetaDetailsTool(
   const client = getClient();
   const query: NonNullable<BuildBetaDetailsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[build]"])?.length && {
-      "filter[build]": toArray(args["filter[build]"])!,
+    ...(toArray(args["filter.build"])?.length && {
+      "filter[build]": toArray(args["filter.build"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result =

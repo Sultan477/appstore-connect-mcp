@@ -15,15 +15,15 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of groups to return (default 100, max 200)"),
-  "filter[app]": z
+  "filter.app": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by app ID(s)"),
-  "filter[name]": z
+  "filter.name": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by group name(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by beta group ID(s)"),
@@ -46,14 +46,14 @@ export default async function listBetaGroupsTool(
   const client = getClient();
   const query: NonNullable<BetaGroupsGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[app]"])?.length && {
-      "filter[app]": toArray(args["filter[app]"])!,
+    ...(toArray(args["filter.app"])?.length && {
+      "filter[app]": toArray(args["filter.app"])!,
     }),
-    ...(toArray(args["filter[name]"])?.length && {
-      "filter[name]": toArray(args["filter[name]"])!,
+    ...(toArray(args["filter.name"])?.length && {
+      "filter[name]": toArray(args["filter.name"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.BetaGroups.betaGroupsGetCollection({

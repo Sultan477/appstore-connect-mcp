@@ -19,11 +19,11 @@ export const schema = {
     .describe(
       "Maximum number of app categories to return (default 100, max 200)"
     ),
-  "filter[platforms]": z
+  "filter.platforms": z
     .union([platformEnum, z.array(platformEnum)])
     .optional()
     .describe("Filter by platform(s)"),
-  "exists[parent]": z
+  "exists.parent": z
     .boolean()
     .optional()
     .describe(
@@ -48,11 +48,11 @@ export default async function listAppCategoriesTool(
   const client = getClient();
   const query: NonNullable<AppCategoriesGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[platforms]"])?.length && {
-      "filter[platforms]": toArray(args["filter[platforms]"])!,
+    ...(toArray(args["filter.platforms"])?.length && {
+      "filter[platforms]": toArray(args["filter.platforms"])!,
     }),
-    ...(args["exists[parent]"] !== undefined && {
-      "exists[parent]": args["exists[parent]"],
+    ...(args["exists.parent"] !== undefined && {
+      "exists[parent]": args["exists.parent"],
     }),
   };
   const result =

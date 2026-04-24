@@ -33,19 +33,19 @@ export const schema = {
     .max(200)
     .default(100)
     .describe("Maximum number of profiles to return (default 100, max 200)"),
-  "filter[name]": z
+  "filter.name": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by profile name(s)"),
-  "filter[profileType]": z
+  "filter.profileType": z
     .union([profileTypeEnum, z.array(profileTypeEnum)])
     .optional()
     .describe("Filter by profile type(s)"),
-  "filter[profileState]": z
+  "filter.profileState": z
     .union([profileStateEnum, z.array(profileStateEnum)])
     .optional()
     .describe("Filter by profile state(s)"),
-  "filter[id]": z
+  "filter.id": z
     .union([z.string(), z.array(z.string())])
     .optional()
     .describe("Filter by profile ID(s)"),
@@ -68,17 +68,17 @@ export default async function listProfilesTool(
   const client = getClient();
   const query: NonNullable<ProfilesGetCollectionData["query"]> = {
     limit: args.limit,
-    ...(toArray(args["filter[name]"])?.length && {
-      "filter[name]": toArray(args["filter[name]"])!,
+    ...(toArray(args["filter.name"])?.length && {
+      "filter[name]": toArray(args["filter.name"])!,
     }),
-    ...(toArray(args["filter[profileType]"])?.length && {
-      "filter[profileType]": toArray(args["filter[profileType]"])!,
+    ...(toArray(args["filter.profileType"])?.length && {
+      "filter[profileType]": toArray(args["filter.profileType"])!,
     }),
-    ...(toArray(args["filter[profileState]"])?.length && {
-      "filter[profileState]": toArray(args["filter[profileState]"])!,
+    ...(toArray(args["filter.profileState"])?.length && {
+      "filter[profileState]": toArray(args["filter.profileState"])!,
     }),
-    ...(toArray(args["filter[id]"])?.length && {
-      "filter[id]": toArray(args["filter[id]"])!,
+    ...(toArray(args["filter.id"])?.length && {
+      "filter[id]": toArray(args["filter.id"])!,
     }),
   };
   const result = await client.api.Profiles.profilesGetCollection({ query });
